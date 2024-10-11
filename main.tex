@@ -1,8 +1,8 @@
 \documentclass{article}
 
 
-\title{Template}
-\author{Name}
+\title{01KOS}
+\author{Matěj Popďakunik}
 
 \usepackage[czech]{babel}
 
@@ -48,6 +48,8 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definice}[section]
+\newtheorem{notation}{Notace}[section]
+
 
 \theoremstyle{remark}
 \newtheorem*{remark}{Poznámka}
@@ -65,6 +67,7 @@
 \renewcommand*{\proofname}{Důkaz:}
 \renewcommand{\figurename}{Obrázek} %lepší překlad
 
+\newcommand{\supp}{\text{supp}}
 
 
 
@@ -79,9 +82,11 @@
     linkcolor=blue,
     filecolor=magenta,      
     urlcolor=cyan,
-    pdftitle={\@title},
+    pdftitle={01KOS},
     pdfpagemode=FullScreen,
     }
+
+
    
 \begin{document}
 
@@ -89,6 +94,7 @@
 
 \maketitle
 
+\subfile{notes/24-10-11.tex}
 
 
 \end{document}

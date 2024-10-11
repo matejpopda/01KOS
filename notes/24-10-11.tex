@@ -1,0 +1,205 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+\begin{document}
+
+\section{Řídká řešení lineárních rovnic}
+
+\begin{itemize}
+    \item $\mathbb{C}, \mathbb{R}$ oba značíme jako $\mathbb{K} \in \{\mathbb{R}, \mathbb{C}\}$
+    \item $x\in\mathbb{R}^N, x = (x_1,..., x_N)$, nosič $\supp x =\{1\leq j \leq N: x_j\neq0 \}$
+\end{itemize}
+
+\begin{definition}
+    $x \in \mathbb{R}^N$ je s-řídké (\textbf{s-sparse}), pokud $||x||_0 = \# \supp (x) = \# \{1\leq j\leq N: x_j\neq0\} \leq s$
+\end{definition}
+
+\begin{notation}
+    Pro $0<p<\infty$: 
+    \begin{equation}
+        ||x||_p = \left( \sum_{j=1}^{N} |x_j|^p \right)^\frac{1}{p}
+    \end{equation}
+
+    \begin{equation}
+        \lim_{p\rightarrow\infty} ||x||_p = ||x||_\infty := \max_{1\leq j \leq N} |x_j|
+    \end{equation}
+
+    \begin{equation}
+        \lim_{p\rightarrow 0} ||x||_p = \lim_{p\rightarrow0} \sum_{j=1}^{N} |x_j|^p = ||x||_0
+    \end{equation}
+
+    \begin{itemize}
+        \item $1\leq p\leq \infty$\begin{equation}
+            ||x+y||_p \leq ||x||_p + ||y||_p 
+        \end{equation}
+        \item $0<p<1$ Quasi-norma\begin{equation}
+            ||x+y||_p \leq C\left(||x||_p + ||y||_p\right)
+        \end{equation}
+        \item $0<p<1$ p-norma \begin{equation}
+            ||x+y||_p^p = \sum_{j=1}^{N} |x_j + y_j|^p \leq \sum_{j=1}^{N} |x_j|^p + \sum_{j=1}^{N} |y_j|^p = ||x||_p^p + ||y||_p^p
+        \end{equation}
+    \end{itemize}
+
+    $s\leq N$:
+    \begin{itemize}
+        \item $S \subset \{1,\dots,N\}$, $\mathbb{R}^N_S = \{x\in \mathbb{R}^N: \supp x \subset S\}$
+        \item $\mathbb{R}_s^N = \{x\in \mathbb{R}^N: ||x||_0 \leq s \} = \bigcup_{S\subset N, \#S=s} \mathbb{R}_S^N$
+    \end{itemize}
+
+    $x, y \in \mathbb{R}^N_s \not\implies x+y\in \mathbb{R}_s^N$ ale $\implies x+y\in \mathbb{R}_{2s}^N$
+\end{notation}
+
+\begin{definition}
+    \textbf{Komprimovatelné vektory}
+
+    Vektory které jsou dobře aproximovatelné řídkými vektory.
+
+    Zaveďme nerostoucí přerovnání
+    \begin{multline}
+        \forall x \in \mathbb{R}^N \exists \pi:\{1,\dots,N\} \mapsto \{1, \dots, N\} \text{ permutace taková}\\\text{, že } 
+        |x_{\pi(1)}| \geq |x_{\pi(2)}| \geq \dots \geq |x_{\pi(N)}| \geq 0
+    \end{multline}
+
+    Položme $x_j^\star = |x_{\pi(j)}|$.
+
+    $\pi$ nemusí být určena jednoznačně, ale vektor $x^\star$ jednoznačně určen je. 
+
+    $S= \left\{ \pi(1), \dots, \pi(s) \right\}$ jsou indexy, kde $x$ má největší hodnoty
+\end{definition}
+
+
+\begin{example}
+    \begin{equation}
+        x = (1,-3,2,4,-1,-4)
+    \end{equation}
+    Vidíme $S \subset \{1,\dots,N\}$
+
+    \begin{equation}
+        x^\star = (4,4,3,2,1,1)
+    \end{equation}
+
+    $x_S\in \mathbb{R}^N: (x_S)_j = \begin{cases}
+        0: j\notin S\\
+        x_j : j \in S
+    \end{cases}$
+
+    \begin{equation}
+        x_{\{1,3,5\}} = (1,0,2,0,-1,0)
+    \end{equation}
+
+    Pro $S=\{\pi(1),\dots,\pi(s)\}$, $x_S$, největších $s$ složek x, $s$-term aproximace $x$.
+\end{example}
+
+
+\begin{definition}
+    $||.||_p : (\mathbb{R}^N, ||.||_p) =: \mathcal{l}_p^N$
+    \begin{equation}
+        B_p^N = \left\{x \in \mathbb{R}^N : ||x||_p \leq 1 \right\}
+    \end{equation}
+\end{definition}
+
+
+\begin{definition}
+    \begin{equation}
+        \sigma_s(x)_p = \inf \{||x-y||_p : y\in \mathbb{R}^N_s \}
+    \end{equation}
+\end{definition}
+
+\begin{theorem}
+    Nechť $s\in \{1,\dots, N\}, 0<p<q\leq \infty$ a $x\in\mathbb{R}^N$. Pak platí
+    \begin{equation}
+        \sigma_s(x)_q \leq \frac{||x||_p}{s^{\frac{1}{p} - \frac{1}{q}}}
+    \end{equation}
+\end{theorem}
+
+\begin{proof}\hphantom{a}
+
+    $\sigma_s(x)_q$ a $||x||_p$ jsou invariantní vůči přerovnání. 
+
+    Předpokládejme, že $x_1 \geq x_2 \geq x_3 \geq \dots \geq 0$.
+
+    Pak 
+    \begin{multline}
+    \sigma_s(x)_1 = \left( \sum_{j = s+1}^{N} x_j^1\right)^{\frac{1}{q}} = \\
+    \left(\sum_{j=s+1}^{N} x_j^p x_j^{q-p}\right)^{\frac{1}{q}} \leq \\
+    x_s^{\frac{q-p}{q}} \left( \sum_{j=s+1}^{N} x_j^p \right)^{\frac{1}{q}} \leq \\
+    x_s^{\frac{q-p}{q}} \left( \sum_{j=s+1}^{N} x_j^p \right)^{\frac{1}{p} \frac{p}{q}} = \\
+    x_s^{\frac{q-p}{q}} ||x||_p^{\frac{p}{q}} = \\
+    x_s^{p \left(\frac{1}{p} - \frac{1}{q}\right)} ||x||_p^{\frac{p}{q}} \leq \\ 
+    ||x||_p^{\frac{p}{q}} x_s^{p \left(\frac{1}{p} - \frac{1}{q}\right)}\leq \\ 
+    ||x||_p^{\frac{p}{q}} \left( \frac{1}{s}\sum_{j=1}^{s} x_j^p\right)^{\frac{1}{p} - \frac{1}{q}} \leq \\ 
+    ||x||_p^{\frac{p}{q}} \frac{1}{s^{\frac{1}{p} - \frac{1}{q}}} ||x||_p^{p\left(\frac{1}{p} - \frac{1}{q}\right)} = \\
+    \frac{1}{s^{\frac{1}{p} - \frac{1}{q}}} ||x||p
+    \end{multline}
+\end{proof}
+
+\begin{remark}
+    Lze vylepšit: 
+    \begin{equation}
+        \sigma_s(x)_q \leq C_{p,q}\frac{||x||_p}{s^{\frac{1}{p} - \frac{1}{q}}}
+    \end{equation}
+    kde 
+    \begin{equation}
+        C_{p,q} = \left[\left(\frac{p}{q}\right)^\frac{p}{q} \left(1 - \frac{p}{q}\right)^{1 - \frac{p}{q}} \right]^{\frac{1}{p}} \leq 1 
+    \end{equation}
+
+    Toto je optimální. 
+
+    Například $\sigma_s(x)_2 \leq \frac{||x||_1}{\sqrt{s}}$; $\sigma_s(x)_2 \leq \frac{1}{2} \frac{||x||_1}{\sqrt{s}}$
+
+
+    Dále 
+    \begin{equation}
+        j (x_j^\star)^p \leq \sum_{k=1}^{j} (x_k^\star)^p \leq ||x||_p^p 
+    \end{equation}
+    $\implies \max_{1\leq j\leq N} j (x_j^\star)^p \leq ||x|_p^p|$
+    Plyne z $\max_{1\leq j \leq N} j^{\frac{1}{p}} x_j^\star \leq ||x||_p$, $\forall j: x_j^\star \leq j^{-\frac{1}{p}} ||x||_p$
+
+    
+    Proto 
+    $||x||_p \leq R \implies \forall j: x_j^\star \leq j^{-\frac{1}{p}} R$
+\end{remark}
+
+
+
+\begin{lemma}
+    Nechť $x,y \in \mathbb{R}^N, k>s, k,s\in \{1,\dots, N \}$ Pak 
+    \begin{enumerate}
+        \item $||x^\star - y^\star ||_\infty \leq ||x-y||_\infty$
+        \item $\left|\sigma_s(x)_1 - \sigma_s(y)_1\right| \leq ||x-y||_1 $
+        \item $(k-s) x_k^\star \leq ||x-y||_1 + \sigma_s(y)_1 $
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    \hphantom{1}
+    \begin{enumerate}
+        \item 
+            $x_k^\star = \min_{T\subset\{1,\dots,N\}, \# T<k} \max_{j\in\{1,\dots,N\}\setminus T} |x_j|$
+
+            kde $T = \left\{\pi(1),\dots, \pi(k-1)\right\}$.
+
+            Pak 
+            \begin{multline}
+                x_k^\star \leq \min_{T\subset\{1,\dots,N\}, \# T<k} \max_{j\in\{1,\dots,N\}\setminus T} |x_j-y_j| + |y_j| \leq \\ 
+                ||x-y||_\infty + \min_{T\subset\{1,\dots,N\}, \# T<k} \max_{j\in\{1,\dots,N\}\setminus T} |y_j| = \\
+                ||x-y||_\infty + y_k^\star
+            \end{multline}
+
+            $\implies x_k^\star - y_k^\star \leq ||x-y||_\infty \max_k |x_k^\star - y_k^\star| \leq ||x-y||_\infty$
+            
+        \item 
+            Nechť $z$ je best-$s$-term aproximace $y$. 
+            \begin{multline}
+                \sigma_s(x)_1 = \inf \left\{||x-w||_1: w\text{ s-řídké}\right\} \leq ||x-z||_1 \leq ||x-y||_1 + ||y-z||_1 =
+                \\ ||x-y||_1 + \sigma_s(y)_1
+            \end{multline}
+            Pokud uděláme to samé  ale prohodíme x a y dostaneme výsledek
+            
+        \item
+        \begin{multline}
+            (k-s) x_k^\star \leq \sum_{j=s+1}^{k} x_j^\star \leq \sum_{j=s+1}^{N} x_j^\star = \sigma_s(x)_1 \leq  ||x-y||_1+\sigma_s(y)
+        \end{multline}
+    \end{enumerate}
+\end{proof}
+
+\end{document}
